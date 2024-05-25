@@ -1,0 +1,5 @@
+{
+  "name": "@rabil/hono-request-redis-cache",
+  "version": "0.1.0",
+  "exports": "./index.ts"
+}
