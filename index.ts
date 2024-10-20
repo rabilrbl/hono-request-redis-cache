@@ -31,8 +31,12 @@ export const cacher = (redis: Redis, seconds: number): (c: Context, next: Next) 
         return await next();
       }
     } else {
-      c.header("Cache-Control", `public, max-age=${seconds}`);
       await next();
+      // If the response is not 200, do not cache it
+      if (c.res.status !== 200) {
+        return;
+      }
+      c.header("Cache-Control", `public, max-age=${seconds}`);
 
       // Clone the response so the body can be read without consuming the stream
       const originalResponse = c.res.clone();
